@@ -2,11 +2,13 @@ package io.pivotal.events.sentimentui;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-public class SentimentUiApplication {
+@Configuration
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SentimentUiApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

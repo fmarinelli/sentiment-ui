@@ -1,0 +1,7 @@
+---
+applications:
+- name: sentiment-ui
+  hosts:
+    - sentiment-ui-${random-word}
+  memory: 1GB
+  instances: 1

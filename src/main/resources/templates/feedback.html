@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout :: head"></head>
+
+<body>
+
+<header th:replace="fragments/layout :: header">
+</header>
+
+<main role="main">
+    <div class="text-center mb-4">
+        <img class="mb-4" src="/images/pivotal-square-logo.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal"><span th:if="${response}" th:text="${response}"></span></h1>
+        <br/>
+        <h1 class="h3 mb-3 font-weight-normal">Thanks for your feedback</h1>
+    </div>
+
+</main>
+
+<footer th:replace="fragments/layout :: footer" class="footer">
+</footer>
+
+<div th:replace="fragments/layout :: scripts"></div>
+
+</body>
+
+</html>
