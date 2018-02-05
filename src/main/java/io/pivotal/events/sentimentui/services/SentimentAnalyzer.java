@@ -1,10 +1,73 @@
 package io.pivotal.events.sentimentui.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.pivotal.events.sentimentui.domain.AnalyzerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-public interface SentimentAnalyzer {
+@Component
+public class SentimentAnalyzer {
 
-    String SENTIMENT_ANALYZER_URI = "//sentiment-analyzer/sentiment";
+    @Autowired
+    private RestTemplate restTemplate;
 
-    AnalyzerResponse analyze(String content);
+    @HystrixCommand(fallbackMethod = "noresponse")
+    public AnalyzerResponse analyze(String content) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> httpEntity = new HttpEntity<>(content, headers);
+        return restTemplate.postForObject("http://sentiment-analyzer/sentiment", httpEntity, AnalyzerResponse.class);
+    }
+
+    public AnalyzerResponse noresponse(String content) {
+        return new AnalyzerResponse();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+//    @HystrixCommand(fallbackMethod = "noresponse")
+
+    public AnalyzerResponse noresponse(String content) {
+        return new AnalyzerResponse();
+    }
+*/

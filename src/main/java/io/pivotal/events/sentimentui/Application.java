@@ -9,10 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 
 @SpringBootApplication
 @EnableHystrix
-@EnableDiscoveryClient
+@EnableDiscoveryClient(autoRegister = false)
 public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -33,12 +32,8 @@ public class Application {
     }
 
     @Bean
-    public RestTemplate buildRestTemplate(ClientHttpRequestFactory requestFactory) {
-        return new RestTemplate(requestFactory);
-    }
-
-    @Bean
-    public ClientHttpRequestFactory buildrequestFactory() {
+    @LoadBalanced
+    public RestTemplate buildRestTemplate() {
         HttpClientBuilder clientBuilder = HttpClients.custom();
         try {
             SSLContext sslContext = SSLContexts.custom()
@@ -49,6 +44,7 @@ public class Application {
             logger.warn(e.getMessage(), e);
         }
 
-        return new HttpComponentsClientHttpRequestFactory(clientBuilder.build());
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(clientBuilder.build());
+        return new RestTemplate(requestFactory);
     }
 }
