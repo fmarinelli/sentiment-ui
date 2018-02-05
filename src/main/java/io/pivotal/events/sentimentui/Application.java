@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 
 @SpringBootApplication
 @EnableHystrix
-@EnableDiscoveryClient(autoRegister = false)
+@EnableDiscoveryClient
 public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
