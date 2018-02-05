@@ -2,6 +2,9 @@
 applications:
 - name: sentiment-ui
   hosts:
-    - sentiment-ui-${random-word}
+    - sentiment-ui
   memory: 1GB
   instances: 1
+  buildpack: java_buildpack_offline
+  env:
+    TRUST_CERTS: api.system.pcf-example.xyz
