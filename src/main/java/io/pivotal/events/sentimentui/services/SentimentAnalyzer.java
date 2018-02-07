@@ -15,16 +15,11 @@ public class SentimentAnalyzer {
     @Autowired
     private RestTemplate restTemplate;
 
-    @HystrixCommand(fallbackMethod = "noresponse")
     public AnalyzerResponse analyze(String content) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> httpEntity = new HttpEntity<>(content, headers);
         return restTemplate.postForObject("http://sentiment-analyzer/sentiment", httpEntity, AnalyzerResponse.class);
-    }
-
-    public AnalyzerResponse noresponse(String content) {
-        return new AnalyzerResponse();
     }
 
 }

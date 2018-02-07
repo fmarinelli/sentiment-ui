@@ -21,7 +21,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
 @SpringBootApplication
-@EnableHystrix
+//@EnableHystrix
 @EnableDiscoveryClient
 public class Application {
 
